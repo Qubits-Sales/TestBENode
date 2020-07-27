@@ -21,15 +21,17 @@ app.get('/test1', function (req, res, next) {
 	return res.send("exito");
 });
 
-const http = require('http');
+/*const http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-const port = '3001';
+/*const port = '3001';
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+//const server = http.createServer(app);
+
+module.exports = app;
