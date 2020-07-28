@@ -21,6 +21,16 @@ app.get('/test1', function (req, res, next) {
 	return res.send("exito");
 });
 
+app.get('/franz/test1/:id/:name/:info', function (req, res) {
+	let obj1 = {
+		id: req.params.id,
+		name: req.params.name,
+		info: req.params.info
+	};
+	res.send(obj1);
+	console.log(obj1);
+});
+
 /*const http = require('http');
 
 /**
