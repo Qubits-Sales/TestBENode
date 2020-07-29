@@ -1,47 +1,55 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
+let data = {};
+const port = 3002;
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
 
-app.get('/test1', function (req, res, next) {
-	return res.send("exito");
+app.listen(port, () => console.log(`App listening at http://localhost:${port}`));
+
+app.get('/', (req, res) => res.send('Server started on port 3002 successfully!'));
+
+app.get('/test1', function (req, res) {
+	return res.send("Test 1 fue un éxito!");
 });
 
 app.get('/franz/test1/:id/:name/:info', function (req, res) {
-	let obj1 = {
+	data = {
 		id: req.params.id,
 		name: req.params.name,
 		info: req.params.info
 	};
-	res.send(obj1);
-	console.log(obj1);
+	res.send(data);
+	console.log(data);
 });
 
-/*const http = require('http');
+app.get('/franz/test2', function (req, res) { //query: ?id=2&name=q
+	data = {
+		id: req.query.id,
+		name: req.query.name,
+		info: req.query.info
+	};
+	res.send(data);
+	console.log(data);
+});
 
-/**
- * Get port from environment and store in Express.
- */
-/*const port = '3001';
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-//const server = http.createServer(app);
+app.post('/franz/test3', function (req, res) {
+	res.send(req.body); //same as res.json(req.body);
+	console.log(req.body);
+});
 
 module.exports = app;
